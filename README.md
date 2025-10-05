@@ -38,3 +38,36 @@ python project.py
 ```
 pip install pyfiglet
 ```
+
+## How it works:
+- Program randomly selects a word of the chosen length
+- The letters arereplaced by underscores ```_```
+- When the player guesses the correct letter it takes place of the underscore
+- Game ends when the player Guesses the word, all the letters or when they run out of attempts
+
+## Example:
+```
+How many letters do you want the word to have? 
+1. 4 letters word
+2. 5 letters word
+3. 6 letters word
+Enter 1, 2 or 3 : 1
+You get 8 guesses.
+If you want a hint, type 'hint' (you only get one per game!)
+_ _ _ _
+Enter guess number 1: hint
+Hint used! Revealed a the letter: Z
+Z _ _ _
+Enter guess number 1: i
+Z _ _ _
+Enter guess number 2: o
+Z _ _ O
+Enter guess number 3: r
+Z _ R O
+Enter guess number 4: e
+Z E R O
+Great you guessed the full word!
++-+-+-+-+
+|Z|E|R|O|
++-+-+-+-+
+```

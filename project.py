@@ -26,7 +26,7 @@ def length():
         else:
             break
 
-    # 2.randomly select a word
+    # 2.randomly select a word with the selected length
     if length == 1:
         with open("4_letters.txt", "r") as file:
             words = file.read().splitlines()
@@ -44,11 +44,18 @@ def length():
 
 
 def game(my_word):
-    # 4.once the user enters a guess, check if correct or not
+    # user gets 8 attempts
+    # everytime they enter a guess the counter increments by 1 no matter if correct or incorrect
+
+    # 3.ask user to enter a guess if correct display it in next iteration and add it to the guessed letters set
+    # 4.if guess is is incorrect display increment the counter by 1
+    # 5.user gets one hint during a game by entering'hint'
+    # 6.allow user to enter full word guesses
+    # 7.user can also enter their guess letter by letter
 
     count = 0
     attempts = 8
-    guessed_word = ["_" for _ in my_word]
+    guessed_word = ["_" for _ in my_word] 
     guessed_letters = set() # a set so that it doesn't allow duplicates
     hint_used = False
 
@@ -58,34 +65,44 @@ def game(my_word):
 
     while count< attempts:
         guess = input(f"Enter guess number {count+1}: ").upper().strip()
-
+        # user asked for a hint
+        #
         if guess == "HINT":
             if not hint_used:
                 hint(my_word, guessed_word, guessed_letters)
                 hint_used = True
-            else:
+            else: 
+                # use already used their hint
+                #
                 print("Sorry, you already used your hint")
             print(" ".join(guessed_word))
             continue
         count += 1
 
         if len(guess) == 1:
+            # letter aalready gueessed
+            #
             if guess in guessed_letters:
                 print("You already guessed this letter")
             else:
+                # if letter is in the word display it
+                #
                 guessed_letters.add(guess)
                 for i, letter in enumerate(my_word):
                     if letter == guess:
                         guessed_word[i] = letter
             
-
+        # full word guess
+        #
         elif guess == my_word:
+            # correct word
             guessed_word = list(my_word)
             print("Correct guess! Well Done!")
             display_word(my_word)
             break
 
         else:
+            # incorrect word
             print("Incorrect guess")
 
         print(" ".join(guessed_word))
@@ -95,20 +112,17 @@ def game(my_word):
             display_word(my_word)
             break
     else:
-        print(f"No more guesses left, the word was {my_word}, better luck next time!")
+        # if they fail print message and word
+        #
+        print("GAME OVER")
+        print(f"No more guesses left, the word was \"{my_word}\", better luck next time!")
         display_word(my_word)
 
-
-    # if guess is incorrect prompt again
-    # if guess if incorrect but some of the leteres are in the correct location keep them
-    # if guess is correct display success message
-    # allow 7 attempts
-    # if no answer print failed message plus the answer
     
 
 def hint(my_word, guessed_word, guessed_letters):
     # could display an extra letter id user types hint
-
+    #
     for i, letter in enumerate(my_word):
         if guessed_word[i] == "_":
             guessed_word[i] = letter
@@ -117,6 +131,8 @@ def hint(my_word, guessed_word, guessed_letters):
             break
         
 def display_word(my_word):
+    # random fancy font to display the word once game is over
+    #  
     fonts = ["alphabet", "banner3-D", "isometric1", "letters", "alligator", "digital"]
     font = random.choice(fonts)
     ascii_art = pyfiglet.figlet_format(my_word, font=font)
